@@ -26,7 +26,7 @@ class _PersonalScreenState extends State<PersonalScreen> {
       final persona = ModalRoute.of(context)!.settings.arguments as Persona;
 
       _firstNameController = TextEditingController(text: persona.firstName);
-      _lastNameController = TextEditingController(text: persona.lastname);
+      _lastNameController = TextEditingController(text: persona.lastName);
       _emailController = TextEditingController(text: persona.email);
       _passwordController = TextEditingController(text: persona.password);
       _selectedDate = persona.birthDate;
@@ -112,7 +112,7 @@ class _PersonalScreenState extends State<PersonalScreen> {
               controller: _bdController,
               readOnly: true,
               onTap: () {
-                _selectedDate(context);
+                _selectDate(context);
               },
               decoration: const InputDecoration(
                 labelText: "Fecha de Nacimiento"

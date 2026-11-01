@@ -64,7 +64,9 @@ class _PersonalScreenState extends State<PersonalScreen> {
     }
 
     final updatedPersona = Persona(firstName: _firstNameController.text.trim(), lastName: _lastNameController.text.trim(), email: _emailController.text.trim(), password: _passwordController.text.trim(), birthDate: _selectedDate!);
-    // Recordatorio: Añadir popup de notificacion
+
+    Navigator.pop(context, updatedPersona);
+    
   }
 
   @override

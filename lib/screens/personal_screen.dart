@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+
 import '../models/persona.dart';
 
+// JUSTIFICACIÓN WIDGET: Se utiliza StatefulWidget porque manejamos el estado de los
+// controladores de texto (TextEditingController) de cada campo y el estado local de la
+// fecha seleccionada mediante el selector showDatePicker antes de devolver los datos.
+
 class PersonalScreen extends StatefulWidget {
-  const PersonalScreen ({super.key});
-  
+  const PersonalScreen({super.key});
+
   @override
-  State<PersonalScreen> createState () => _PersonalScreenState();
+  State<PersonalScreen> createState() => _PersonalScreenState();
 }
 
 class _PersonalScreenState extends State<PersonalScreen> {
@@ -30,7 +35,10 @@ class _PersonalScreenState extends State<PersonalScreen> {
       _emailController = TextEditingController(text: persona.email);
       _passwordController = TextEditingController(text: persona.password);
       _selectedDate = persona.birthDate;
-      _bdController = TextEditingController(text: "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}");
+      _bdController = TextEditingController(
+        text:
+            "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}",
+      );
 
       _isInitialized = true;
     }
@@ -47,7 +55,12 @@ class _PersonalScreenState extends State<PersonalScreen> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(context: context, initialDate: _selectedDate, firstDate: DateTime(1900), lastDate: DateTime.now());
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
 
     if (picked != null) {
       setState(() {
@@ -58,23 +71,32 @@ class _PersonalScreenState extends State<PersonalScreen> {
   }
 
   void _guardarVolver() {
-    if (_firstNameController.text.trim().isEmpty || _lastNameController.text.trim().isEmpty || _emailController.text.trim().isEmpty || _passwordController.text.trim().isEmpty || _selectedDate == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Rellena todos los campos")));
+    if (_firstNameController.text.trim().isEmpty ||
+        _lastNameController.text.trim().isEmpty ||
+        _emailController.text.trim().isEmpty ||
+        _passwordController.text.trim().isEmpty ||
+        _selectedDate == null) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Rellena todos los campos")));
       return;
     }
 
-    final updatedPersona = Persona(firstName: _firstNameController.text.trim(), lastName: _lastNameController.text.trim(), email: _emailController.text.trim(), password: _passwordController.text.trim(), birthDate: _selectedDate!);
+    final updatedPersona = Persona(
+      firstName: _firstNameController.text.trim(),
+      lastName: _lastNameController.text.trim(),
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+      birthDate: _selectedDate!,
+    );
 
     Navigator.pop(context, updatedPersona);
-    
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Martinez - Edit Profile"),
-      ),
+      appBar: AppBar(title: const Text("Martinez - Edit Profile")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -82,32 +104,24 @@ class _PersonalScreenState extends State<PersonalScreen> {
             TextField(
               controller: _firstNameController,
               textCapitalization: TextCapitalization.words,
-              decoration: const InputDecoration(
-                labelText: "Nombre"
-              ),
+              decoration: const InputDecoration(labelText: "Nombre"),
             ),
             const SizedBox(height: 12),
             TextField(
               controller: _lastNameController,
-              decoration: const InputDecoration(
-                labelText: "Apellido",
-              ),
+              decoration: const InputDecoration(labelText: "Apellido"),
             ),
             const SizedBox(height: 12),
             TextField(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                labelText: "Email",
-              ),
+              decoration: const InputDecoration(labelText: "Email"),
             ),
             const SizedBox(height: 12),
             TextField(
               controller: _passwordController,
               obscureText: true,
-              decoration: const InputDecoration(
-                labelText: "Contraseña"
-              ),
+              decoration: const InputDecoration(labelText: "Contraseña"),
             ),
             const SizedBox(height: 12),
             TextField(
@@ -117,18 +131,17 @@ class _PersonalScreenState extends State<PersonalScreen> {
                 _selectDate(context);
               },
               decoration: const InputDecoration(
-                labelText: "Fecha de Nacimiento"
+                labelText: "Fecha de Nacimiento",
               ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _guardarVolver,
               child: const Text("Guardar y Volver"),
-            )
+            ),
           ],
         ),
       ),
     );
   }
-
 }

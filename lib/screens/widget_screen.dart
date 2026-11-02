@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+// JUSTIFICACIÓN WIDGET: Se utiliza StatefulWidget porque la lista interactiva con
+// Dismissible necesita actualizar el estado interno borrando elementos de la lista
+// y redibujando la pantalla al realizar el gesto de deslizar.
+
 class WidgetScreen extends StatefulWidget {
   const WidgetScreen({super.key});
 
@@ -8,34 +12,42 @@ class WidgetScreen extends StatefulWidget {
 }
 
 class _WidgetScreenState extends State<WidgetScreen> {
-  List<String> _items = ["Elemento 1", "Elemento 2", "Elemento 3", "Elemento 4", "Elemento 5"];
+  List<String> _items = [
+    "Elemento 1",
+    "Elemento 2",
+    "Elemento 3",
+    "Elemento 4",
+    "Elemento 5",
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Widget Showcase"),
-      ),
+      appBar: AppBar(title: const Text("Widget Showcase")),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-              const Text("1. ExpansionTitle (Desplegable)", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
-              const SizedBox(height: 8),
-              const ExpansionTile(title: Text("Pulsa para desplegar Info"),
+            const Text(
+              "1. ExpansionTitle (Desplegable)",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            const SizedBox(height: 8),
+            const ExpansionTile(
+              title: Text("Pulsa para desplegar Info"),
               leading: Icon(Icons.info),
               children: [
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text("Hola!"),
-                )
+                Padding(padding: EdgeInsets.all(16), child: Text("Hola!")),
               ],
             ),
 
             const SizedBox(height: 24),
 
-            const Text("2. Dismissible (Deslizar para borrar)", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            const Text(
+              "2. Dismissible (Deslizar para borrar)",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
             const SizedBox(height: 8),
 
             Expanded(
@@ -50,7 +62,10 @@ class _WidgetScreenState extends State<WidgetScreen> {
                       color: Colors.red,
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.only(left: 20),
-                      child: const Icon(Icons.delete_forever, color: Colors.white), 
+                      child: const Icon(
+                        Icons.delete_forever,
+                        color: Colors.white,
+                      ),
                     ),
                     onDismissed: (direction) {
                       setState(() {
@@ -60,13 +75,15 @@ class _WidgetScreenState extends State<WidgetScreen> {
                     child: Card(
                       child: ListTile(
                         title: Text(item),
-                        subtitle: const Text("Desliza a la derecha para Borrar"),
+                        subtitle: const Text(
+                          "Desliza a la derecha para Borrar",
+                        ),
                       ),
                     ),
                   );
-                }
+                },
               ),
-            )
+            ),
           ],
         ),
       ),
